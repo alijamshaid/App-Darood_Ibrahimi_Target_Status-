@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Statistics
+{% endblock title %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% block body %}
+<header style="background-color: green; text-align: center; position:absolute; top:48px; right: 0px; left: 0px;">
+<h2>Statistics</h2>
+<h3>Target : 10,000,000 Darood Ibrahimi (IN SH ALLAH)</h3>
+<h4>Remaining Darood Ibrahimi : {{remaining}}</h4>
+</header>
+<div style="background-color: black; overflow-y: auto;color:white;padding: 50px; position:absolute; top:173px; left:0; text-align: center; height: 370px; width:250px ;">
+<!-- <p>{{allRows}}</p> -->
+<table style="border: 1px solid white;position: absolute; top: 0; left: 0; right: 0;width:250px">
+  <tr style="border: 1px solid white;">
+    <th style="border: 1px solid white;">Date</th>
+    <th style="border: 1px solid white;">Darood Recited</th>
+  </tr>
+    {% for item in allRows %}
+        <tr style="border: 1px solid white;">
+        <td style="border: 1px solid white;">{{ item.eventDate }}</td>
+        <td style="border: 1px solid white;">{{ item.recited }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+<div id="map" style="position: absolute;top: 173px; left: 250px;right: 250px; height: 370px; color: white;">
+</div>
+<div style="background-color: black;color:white;padding: 50px; position:absolute; top:173px; right:0px; text-align: center; height: 370px; width:250px;">
+<h2><span>{{totSum}}</span> Darood Ibrahimi completed in <span>{{totalRows}}</span> days</h2>
+</div>
+<footer style="background-color: green;text-align: center;position:absolute; bottom:0; height: 97px; width: 1365px;">
+    <h6>Recieved {{darajatBuland}} blessing from Allah, Allah Forgive {{gunahMaaf}} sins,{{darajatBuland}} degrees added to your status</h6>
+    <h6>اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</h6>
+    <h4>Keep Reciting Darood Ibrahimi</h4>
+</footer>
+<script>
+    let map = L.map('map').setView([30, 69], 3);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    myMarker = L.marker([34,76]).bindTooltip("My Current Location", { permanent: true, direction: 'left'}).addTo(map);
+    myMadina = L.marker([24.467230, 39.610608]).bindTooltip("Masjid Nabwi", { permanent: true, direction: 'right'}).addTo(map);
+    madina = [24.467230, 39.610608];
+    myLocation = [34,76]
+    var arc = L.geodesic([myLocation, madina], {
+        weight: 10,
+        color: 'Green',
+        steps: 1 // Increases the smoothness of the curve
+    }).bindTooltip("Sending Salawaat on Prophet Muhammad (PBUH) SAW", { permanent: true, direction: 'right', className:'linestyle'}).addTo(map);
+    map.fitBounds(arc.getBounds());
+</script>
+{% endblock body %}
+

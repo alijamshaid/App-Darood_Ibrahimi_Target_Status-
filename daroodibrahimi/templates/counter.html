@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+counter
+{% endblock title %}
+{% block body %}
+<div style="text-align: center; background-color: black; color: white;position: absolute; top:47px;right:0px;left: 0px;bottom: 500px;">
+    <div style="position: absolute; top:0px;right:0px;left: 1000px;bottom:520;">
+        <form method="POST", action="/counter2">
+            {% csrf_token %}
+            <label>Your City</label>
+            <input type="text" placeholder="Location" name="location">
+            <button style="background-color: forestgreen;">Submit</button>
+        </form>
+    </div>
+    <h1>Darood Ibrahimi: <span id="countDisplay">0</span></h1>
+    <button onclick="increaseCount()" style="background-color: blue;">Increment</button>
+    <button id="reduce" onclick="decreaseCount()" style="background-color: yellow;">Decrement</button>
+    <button onclick="reset()" style="background-color: red;">Reset</button>
+</div>
+<div id="map" style="text-align: center; color: white;position: absolute; top:171px;right:0px;left: 0px;bottom: 96px;">
+</div>
+<div style="background-color:black;position: absolute;bottom: 480;top: 140px;right:0px;left: 0px; text-align: center;">
+        <form method="POST", action="/counter">
+            {% csrf_token %}
+        <input type="hidden" name="counteradded" id="counteradded"/>
+        <button onclick="submitToDb()" style="background-color: green;color:white;">Save to DB</button>
+        </form>
+</div>
+<footer style="background-color: black;color:white;text-align: center;position:absolute; bottom:0; height: 97px; width: 1365px;">
+    <h4>اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</h4>
+    <h4>Keep Reciting Darood Ibrahimi</h4>
+</footer>
+<script>
+    let count = 0;
+    function increaseCount() {
+        count++;
+        document.getElementById("countDisplay").textContent = count;
+    }
+    function decreaseCount(){
+        if (count<=0){
+            button.getElementById("reduce").disable = true;
+        }else{
+            count--;
+            document.getElementById("countDisplay").textContent = count;
+        }
+    }
+    function reset(){
+        count = 0;
+        document.getElementById("countDisplay").textContent = count;
+    }
+    function submitToDb(){
+        // document.getElementById('counterdb').value = count;
+        const myButton = document.getElementById("counteradded").value=count;
+        alert("Successfully added")
+        count=0;
+    }
+    let map = L.map('map').setView([30, 69], 3);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    myMarker = L.marker([{{spatialLatitude}},{{spatialLongitude}}]).bindTooltip("My Current Location", { permanent: true, direction: 'left'}).addTo(map);
+    myMadina = L.marker([24.467230, 39.610608]).bindTooltip("Masjid Nabwi", { permanent: true, direction: 'left'}).addTo(map);
+    madina = [24.467230, 39.610608];
+    myLocation = [{{spatialLatitude}},{{spatialLongitude}}]
+    var arc = L.geodesic([myLocation, madina], {
+        weight: 10,
+        color: 'Green',
+        steps: 1 // Increases the smoothness of the curve
+    }).bindTooltip("Sending Salawaat on Prophet Muhammad (PBUH) SAW", { permanent: true, direction: 'left'}).addTo(map);
+    map.fitBounds(arc.getBounds());
+</script>
+{% endblock body %}

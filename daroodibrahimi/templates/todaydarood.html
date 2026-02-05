@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+history of today darood 
+{% endblock title %}
+
+
+{% block body %}
+<div style="position: absolute; top:48px;text-align: center;right:0px;left: 0px;bottom:0; background-color:cadetblue">
+<h4>اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</h4>
+<form method="POST" action="/todaydarood" style="position: absolute; top:150px;right:150px;left: 150px;bottom:150; background-color:olivedrab">
+    {% csrf_token %}
+  <!-- Text Input -->
+  <div class="mb-3">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" id="name" value="Muhammad Ali" readonly>
+  </div>
+  
+  <!-- Integer Input -->
+  <div class="mb-3">
+    <label for="recited">Darood Ibrahimi Recited</label>
+    <input type="number" class="form-control" name="recited" id="recited" placeholder="0" min="0" step="1";> 
+  </div>
+  <div class="mb-3">
+  <label for="eventDate">Date</label>
+  <input type="date" id="eventDate" class="form-control" name="eventDate"/>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<footer style="background-color: cadetblue;color:black;text-align: center;position:absolute; bottom:0; height: 97px; width: 1365px;">
+    <h4>اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</h4>
+    <h4>Keep Reciting Darood Ibrahimi</h4>
+</footer>
+{% endblock body %}
+
